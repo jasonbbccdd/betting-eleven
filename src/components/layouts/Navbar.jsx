@@ -3,19 +3,17 @@ import Navbar from 'react-bootstrap/Navbar'
 import Container from 'react-bootstrap/Container'
 import Nav from 'react-bootstrap/Nav'
 import Button from 'react-bootstrap/Button'
-import LoadingButton from '@/components/layouts/LoadingButton'
-
+import { useRouter } from 'next/router'
 import { useSession, signIn, signOut } from 'next-auth/react'
+
+import LoadingButton from '@/components/layouts/LoadingButton'
 
 export default function CompsLayoutsNavbar() {
   const { data: session } = useSession()
-
-  const handleSignIn = async () => {
-    await signIn()
-  }
+  const router = useRouter()
 
   return (
-    <Navbar bg="dark" variant="dark" expand="lg">
+    <Navbar bg="dark" variant="dark" expand="lg" style={{ zIndex: 999 }}>
       <Container>
         <Navbar.Brand as={Link} href="/">
           <a className="navbar-brand">Home</a>
@@ -25,14 +23,20 @@ export default function CompsLayoutsNavbar() {
           <Nav className="me-auto">
             <Nav.Link as={Link} href="/worldcup2022"><a className="nav-link">World Cup 2022</a></Nav.Link>
             <Nav.Link as={Link} href="/tournaments"><a className="nav-link">Tounrnaments</a></Nav.Link>
-            {
-              session ? (
-                <Button onClick={() => signOut({ callbackUrl: '/' })}>Sign Out</Button>
-              ) : (
-                <LoadingButton handleClick={() => handleSignIn()} text="Sign In" />
-              )
-            }
           </Nav>
+          {
+            router.pathname !== '/auth/signin' && (
+              <Nav className="ms-auto">
+                {
+                  session ? (
+                    <Button onClick={() => signOut({ callbackUrl: '/' })}>Sign Out</Button>
+                  ) : (
+                    <LoadingButton handleClick={() => signIn()} text="Sign In" />
+                  )
+                }
+              </Nav>
+            )
+          }
         </Navbar.Collapse>
       </Container>
     </Navbar>

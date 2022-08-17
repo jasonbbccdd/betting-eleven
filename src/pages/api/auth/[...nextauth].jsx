@@ -1,6 +1,7 @@
 import NextAuth from 'next-auth'
-import GitHubProvider from 'next-auth/providers/github'
 import EmailProvider from 'next-auth/providers/email'
+import GitHubProvider from 'next-auth/providers/github'
+import GoogleProvider from 'next-auth/providers/google'
 import { PrismaAdapter } from '@next-auth/prisma-adapter'
 
 import prisma from '@/controllers/_helpers/prisma'
@@ -8,10 +9,6 @@ import prisma from '@/controllers/_helpers/prisma'
 export default NextAuth({
   adapter: PrismaAdapter(prisma),
   providers: [
-    GitHubProvider({
-      clientId: process.env.GITHUB_CLIENT,
-      clientSecret: process.env.GITHUB_SECRET
-    }),
     EmailProvider({
       server: {
         host: process.env.EMAIL_SERVER_HOST,
@@ -21,6 +18,14 @@ export default NextAuth({
           pass: process.env.EMAIL_SERVER_PASSWORD
         }
       }
+    }),
+    GitHubProvider({
+      clientId: process.env.GITHUB_CLIENT,
+      clientSecret: process.env.GITHUB_SECRET
+    }),
+    GoogleProvider({
+      clientId: process.env.GOOGLE_CLIENT,
+      clientSecret: process.env.GOOGLE_SECRET
     })
   ],
   callbacks: {
