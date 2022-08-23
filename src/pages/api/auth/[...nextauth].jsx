@@ -30,6 +30,9 @@ export default NextAuth({
   ],
   callbacks: {
     async session({ session, user }) {
+      console.log('session:', session) // eslint-disable-line
+      console.log('user:', user) // eslint-disable-line
+
       session.user.id = user.id // eslint-disable-line
       return session
     }

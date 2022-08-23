@@ -1,6 +1,10 @@
 {
   "name": "jujutsuTHREE",
   "private": true,
+  "prisma": {
+    "seed": "dotenv -e .env.development.local -- node prisma/seed.js"
+  },
+  "type": "module",
   "scripts": {
     "dev": "next dev",
     "build": "next build",

@@ -51,3 +51,30 @@ model VerificationToken {
   expires    DateTime
   @@unique([identifier, token])
 }
+
+model Tournament {
+  id          Int     @id @default(autoincrement())
+  code        String  @unique
+  name        String?
+  logo        String?
+  type        String?
+  confederation  Confederation? @relation(fields: [confederationId], references: [id] )
+  confederationId Int?
+
+}
+
+model Confederation {
+  id    Int     @id @default(autoincrement())
+  code  String  @unique
+  name  String?
+  logo  String?
+  map   String?
+  tournaments Tournament[]
+}
+
+  // edition     String?
+  // year        String?
+  // host        String?
+  // numOfGroups Int?
+  // numOfTeams  Int?
+  // groups      Group[]

@@ -29,7 +29,11 @@ export default function CompsLayoutsNavbar() {
               <Nav className="ms-auto">
                 {
                   session ? (
-                    <Button onClick={() => signOut({ callbackUrl: '/' })}>Sign Out</Button>
+                    <>
+                      <span className="text-white">{session.user.name}</span>
+                      <Button onClick={() => signOut({ callbackUrl: '/' })}>Sign Out</Button>
+
+                    </>
                   ) : (
                     <LoadingButton handleClick={() => signIn()} text="Sign In" />
                   )
