@@ -6,7 +6,7 @@ import Button from 'react-bootstrap/Button'
 import { useRouter } from 'next/router'
 import { useSession, signIn, signOut } from 'next-auth/react'
 
-import LoadingButton from '@/components/layouts/LoadingButton'
+import ButtonLoading from '@/components/buttons/Loading'
 
 export default function CompsLayoutsNavbar() {
   const { data: session } = useSession()
@@ -31,11 +31,11 @@ export default function CompsLayoutsNavbar() {
                   session ? (
                     <>
                       <span className="text-white">{session.user.name}</span>
-                      <Button onClick={() => signOut({ callbackUrl: '/' })}>Sign Out</Button>
+                      <Button onClick={() => signOut()}>Sign Out</Button>
 
                     </>
                   ) : (
-                    <LoadingButton handleClick={() => signIn()} text="Sign In" />
+                    <ButtonLoading handleClick={() => signIn()} text="Sign In" />
                   )
                 }
               </Nav>

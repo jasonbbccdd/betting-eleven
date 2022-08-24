@@ -1,7 +1,7 @@
 import React, { useState } from 'react'
 import Button from 'react-bootstrap/Button'
 
-export default function CompsLoadingButton({ handleClick, text }) {
+export default function CompsButtonLoading({ handleClick, text }) {
   const [isLoading, setLoading] = useState(false)
 
   const customHandleClick = () => {

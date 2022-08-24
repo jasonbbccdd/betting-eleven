@@ -1,3 +1,4 @@
+/* eslint-disable @next/next/no-html-link-for-pages */
 import { signOut, useSession } from 'next-auth/react'
 import styles from './Header.module.css'
 
@@ -42,3 +43,12 @@ export default function Header() {
     </header>
   )
 }
+
+// <a
+//   href="/api/auth/signout"
+//   className={styles.button}
+//   onClick={(e) => {
+//     e.preventDefault()
+//     signOut()
+//   }}
+// >
