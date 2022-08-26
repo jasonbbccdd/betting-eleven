@@ -23,7 +23,8 @@ model Account {
   scope             String?
   id_token          String? @db.Text
   session_state     String?
-  user User @relation(fields: [userId], references: [id], onDelete: Cascade)
+  user              User    @relation(fields: [userId], references: [id], onDelete: Cascade)
+
   @@unique([provider, providerAccountId])
 }
 
@@ -49,32 +50,59 @@ model VerificationToken {
   identifier String
   token      String   @unique
   expires    DateTime
+
   @@unique([identifier, token])
 }
 
 model Tournament {
-  id          Int     @id @default(autoincrement())
-  code        String  @unique
-  name        String?
-  logo        String?
-  type        String?
-  confederation  Confederation? @relation(fields: [confederationId], references: [id] )
-  confederationId Int?
-
+  id              Int            @id @default(autoincrement())
+  order           Int            @default(0)
+  code            String         @unique
+  name            String?
+  logo            String?
+  type            String?
+  confederation   Confederation? @relation(fields: [confederationCode], references: [code])
+  confederationCode String?
+  editions        Edition[]
 }
 
 model Confederation {
-  id    Int     @id @default(autoincrement())
-  code  String  @unique
-  name  String?
-  logo  String?
-  map   String?
+  id          Int          @id @default(autoincrement())
+  order       Int          @default(0)
+  code        String       @unique
+  name        String?
+  logo        String?
+  map         String?
   tournaments Tournament[]
 }
 
-  // edition     String?
-  // year        String?
-  // host        String?
-  // numOfGroups Int?
-  // numOfTeams  Int?
-  // groups      Group[]
+model Edition {
+  id              Int        @id @default(autoincrement())
+  order           Int        @default(0)
+  code            String     @unique
+  year            String?
+  logo            String?
+  numOfGroups     Int?
+  numOfTeams      Int?
+  tournament      Tournament @relation(fields:[tournamentCode], references: [code], onDelete: Cascade)
+  tournamentCode  String
+  hosts           Host[]
+// groups     Group[]
+}
+
+model Host {
+  id          Int  @id @default(autoincrement())
+  order       Int  @default(0)
+  edition     Edition @relation(fields:[editionCode], references:[code], onDelete: Cascade)
+  editionCode String
+  nation      Nation? @relation(fields:[nationName], references:[name])
+  nationName  String?
+}
+
+model Nation {
+  id         Int    @id @default(autoincrement())
+  code2      String @unique
+  code3      String @unique
+  name       String @unique
+  hosts      Host[]
+}

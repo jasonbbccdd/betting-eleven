@@ -2,7 +2,6 @@ import Link from 'next/link'
 import Navbar from 'react-bootstrap/Navbar'
 import Container from 'react-bootstrap/Container'
 import Nav from 'react-bootstrap/Nav'
-import Button from 'react-bootstrap/Button'
 import { useRouter } from 'next/router'
 import { useSession, signIn, signOut } from 'next-auth/react'
 
@@ -31,7 +30,7 @@ export default function CompsLayoutsNavbar() {
                   session ? (
                     <>
                       <span className="text-white">{session.user.name}</span>
-                      <Button onClick={() => signOut()}>Sign Out</Button>
+                      <ButtonLoading handleClick={() => signOut()} text="Sign Out" />
 
                     </>
                   ) : (

@@ -9,24 +9,19 @@ const deleteSession = async () => {
 const genConfederations = async () => {
   const promises = []
   const confederationsList = [
-    ['FIFA', '', '', ''],
-    ['UEFA', '', '', ''],
-    ['CONMEBOL', '', '', ''],
-    ['CONCACAF', '', '', ''],
-    ['CAF', '', '', ''],
-    ['AFC', '', '', ''],
-    ['OFC', '', '', '']
+    { code: 'FIFA', order: 1, name: '', logo: '', map: '' },
+    { code: 'UEFA', order: 2, name: '', logo: '', map: '' },
+    { code: 'CONMEBOL', order: 3, name: '', logo: '', map: '' },
+    { code: 'CONCACAF', order: 4, name: '', logo: '', map: '' },
+    { code: 'CAF', order: 5, name: '', logo: '', map: '' },
+    { code: 'AFC', order: 6, name: '', logo: '', map: '' },
+    { code: 'OFC', order: 7, name: '', logo: '', map: '' }
   ]
 
   await prisma.confederation.deleteMany({})
   for (let i = 0; i < confederationsList.length; i += 1) {
     promises.push(prisma.confederation.create({
-      data: {
-        code: confederationsList[i][0],
-        name: confederationsList[i][1],
-        logo: confederationsList[i][2],
-        map: confederationsList[i][3]
-      }
+      data: confederationsList[i]
     }))
   }
 

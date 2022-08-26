@@ -2,9 +2,9 @@ import useSWR from 'swr'
 import { useRouter } from 'next/router'
 import { fetcher } from './_utils'
 
-export default function useTournaments() {
-  const { query: { page }, isReady } = useRouter()
-  const { data, error } = useSWR(isReady ? ['/api/tournaments', { page: Number(page) || 1 }] : null, fetcher)
+export default function useTournamentEditions() {
+  const { query: { tournamentId }, isReady } = useRouter()
+  const { data, error } = useSWR(isReady ? `/api/tournaments/${tournamentId}` : null, fetcher)
 
   return {
     meta: data?.meta,
